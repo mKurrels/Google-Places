@@ -19,7 +19,7 @@ buildMap({
 });
 ```
 
-(see example_index.html)
+(see index.html)
 
 If you need an API KEY, you get one here: https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
 
