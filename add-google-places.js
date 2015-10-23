@@ -1,15 +1,22 @@
 
-
 (function() {
   var _OPTIONS;
 
   window.buildMap = function (options) {
     _OPTIONS = options;
-    var $html = $('<input id="pac-input" class="controls" type="text" placeholder="Search">'
-             + '<div id="map"></div>'
-             + '<script src="https://maps.googleapis.com/maps/api/js?key='
-             + options.API_KEY
-             +'&libraries=places&callback=initAutocomplete" async defer></script>');
+    
+    var font_awesome = $('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">');
+    $('head').append(font_awesome);
+
+    var $html = $([
+      '<div id="search-box">',                                      
+      '  <input id="pac-input" class="controls" type="text" placeholder="Search"><button id="trigger-search" class="icon"><i class="fa fa-search"></i></button>',
+      '</div>', 
+      '<div id="map"></div>', 
+      '<script src="https://maps.googleapis.com/maps/api/js?key=',
+              options.API_KEY,
+      '&libraries=places&callback=initAutocomplete" async defer></script>'
+    ].join("\n"));
 
     $(options.selector).append($html);
   };
@@ -32,7 +39,7 @@
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('search-box'));
 
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function() {
@@ -40,6 +47,7 @@
     });
 
     var markers = [];
+
     // [START region_getplaces]
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -85,5 +93,16 @@
       map.fitBounds(bounds);
     });
     // [END region_getplaces]
+
+    // Trigger search on button click
+    document.getElementById('trigger-search').onclick = function () {
+
+        var input = document.getElementById('pac-input');
+        google.maps.event.trigger(input, 'focus');
+        google.maps.event.trigger(input, 'keydown', {
+            keyCode: 13
+        });
+    };
+
   };
 })(); 
