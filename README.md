@@ -1,6 +1,6 @@
 # Google-Places
 
-Google-Places will add a google places searchable map to any element you want.
+Google-Places will add a google places searchable map to any element you want. The only requirement is jQuery.
 
 directions:  
 * Add add-google-places.js to your project  
